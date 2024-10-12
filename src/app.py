@@ -16,13 +16,13 @@ engine.connect()
 # 2) Execute the SQL sentences to create your tables using the SQLAlchemy's execute function
 
 engine.execute("""
-CREATE TABLE IF NOT EXIST publishers(
+CREATE TABLE publishers(
     publisher_id INT NOT NULL,
     name VARCHAR(255) NOT NULL,
     PRIMARY KEY(publisher_id)
 );
 
-CREATE TABLE IF NOT EXIST authors(
+CREATE TABLE authors(
     author_id INT NOT NULL,
     first_name VARCHAR(100) NOT NULL,
     middle_name VARCHAR(50) NULL,
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXIST authors(
     PRIMARY KEY(author_id)
 );
 
-CREATE TABLE IF NOT EXIST books(
+CREATE TABLE books(
     book_id INT NOT NULL,
     title VARCHAR(255) NOT NULL,
     total_pages INT NULL,
@@ -42,17 +42,19 @@ CREATE TABLE IF NOT EXIST books(
     CONSTRAINT fk_publisher FOREIGN KEY(publisher_id) REFERENCES publishers(publisher_id)
 );
 
-CREATE TABLE IF NOT EXIST book_authors (
+CREATE TABLE book_authors (
     book_id INT NOT NULL,
     author_id INT NOT NULL,
     PRIMARY KEY(book_id, author_id),
     CONSTRAINT fk_book FOREIGN KEY(book_id) REFERENCES books(book_id) ON DELETE CASCADE,
     CONSTRAINT fk_author FOREIGN KEY(author_id) REFERENCES authors(author_id) ON DELETE CASCADE
+);
 """)
 
 # 3) Execute the SQL sentences to insert your data using the SQLAlchemy's execute function
 
 engine.execute("""
+
 INSERT INTO publishers(publisher_id, name) VALUES (1, 'O Reilly Media');
 INSERT INTO publishers(publisher_id, name) VALUES (2, 'A Book Apart');
 INSERT INTO publishers(publisher_id, name) VALUES (3, 'A K PETERS');
